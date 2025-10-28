@@ -1,0 +1,89 @@
+ <!-- the main page after authorisation -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aubrey&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+     <!-- navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+            ActiveBond
+        </div>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="#about-us">About us</a>
+            {% if 'username' in session %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>    
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+            <a href="#Contactus">Contact us</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="{{ url_for('static', filename='videos/jumping_video.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            <div class="video-text">
+              <h2>Move Together,<br> Thrive Together</h2>
+            </div>
+          </div>
+          <section class="about-section" id="about-us">
+            <div class="about-bg">
+              <img src="{{ url_for('static', filename='images/tennis.jpg') }}" alt="Tennis" />
+            </div>
+            <!--About us secction -->
+            <h1 class="about-title">About Us</h1>
+            <div class="about-content">
+              <div class="about-box left">
+                <h3>Our Start</h3>
+                <p>It all started with a simple idea among a group of friends who loved sports and wanted to bring people together beyond the game. They noticed how sports create bonds, spark conversations, and build communities. What if there was an easy way for anyone — no matter their location or skill level — to find nearby activities, share experiences, and make meaningful connections? That idea sparked the creation of this platform, designed to help people discover more than just games, but friendships and shared passions.</p>
+              </div>
+              <div class="about-box right">
+                <h3>Our Mission</h3>
+                <p>We believe that sports are more than competition — they are a universal language for connection and personal growth. Our mission is to bridge gaps between people by creating a welcoming space where anyone can publish their own activities, share stories, post updates, and engage with others. Whether you’re organizing a friendly weekend match or searching for a new training buddy, our platform helps you find your tribe and participate in the joy of an active lifestyle.</p>
+              </div>
+              <div class="about-box left">
+                <h3>Looking Ahead</h3>
+                <p>Joining ActiveBond means stepping into a welcoming, supportive community...</p>
+              </div>
+            </div>
+             <!-- joining us -->
+            <div class="cta">
+              <h2>Interested?<br>Join us!</h2>
+              <a href="{{ url_for('register') }}" class="btn-register">Register</a>
+            </div>
+             <!-- contact info -->
+            <footer class="contact-section" id="Contactus">
+              <h2>ActiveBond</h2>
+              <div class="contact-line"></div>
+              <h3>Contact info</h3>
+              <ul>
+                <li>Phone: +654 6988 3788 465</li>
+                <li>Email: activebond@gmail.com</li>
+              </ul>
+              <div class="contact-line short"></div>
+              <h3>Find us</h3>
+              <div class="icon-container">
+                <img src="{{ url_for('static', filename='icons/icon1.svg') }}" alt="Icon 1">
+                <img src="{{ url_for('static', filename='icons/icon2.svg') }}" alt="Icon 2">
+                <img src="{{ url_for('static', filename='icons/icon3.svg') }}" alt="Icon 3">
+                <img src="{{ url_for('static', filename='icons/icon4.svg') }}" alt="Icon 4">
+              </div>
+            </footer>
+          </section>          
+    </main>
+</body>
+</html>

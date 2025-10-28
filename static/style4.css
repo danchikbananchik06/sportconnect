@@ -1,0 +1,356 @@
+
+/* === 
+MAIN CONTENT
+ === */
+main {
+    max-width: 900px;
+    margin: 20px auto 40px auto; /* account for fixed navbar */
+    padding: 20px;
+}
+
+h1, h2 {
+    color: rgb(181, 247, 81);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgb(28,27,27);
+}
+
+/* === FLASH MESSAGES === */
+ul.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+ul.messages li {
+    background-color: rgba(181,247,81,0.2);
+    color: rgb(59,59,59);
+    margin: 8px 0;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+/* === 
+PROFILE SECTION
+ === */
+.profile-section {
+    display: flex;
+    gap: 40px;
+    background: rgba(40, 40, 40, 0.85);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    flex-wrap: wrap;
+}
+
+/* Profile Picture Container */
+.profile-pic-container {
+    flex: 1 1 250px;
+    text-align: center;
+}
+
+/* Circular profile picture and placeholder */
+.profile-pic,
+.profile-pic-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid rgb(181,247,81);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 15px auto; /* Center above the button */
+}
+
+/* Placeholder styling */
+.profile-pic-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(100,100,100,0.3);
+    color: rgb(181,247,81);
+    font-size: 18px;
+}
+
+/* Fade-in animation for uploaded image */
+.profile-pic {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Profile Description Container */
+.profile-desc-container {
+    flex: 2 1 500px;
+}
+
+.profile-desc-container textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    resize: vertical;
+    background-color: rgba(70,70,70,0.6);
+    color: rgb(240,240,240);
+}
+
+/* Buttons */
+.profile-desc-container button,
+.profile-pic-container button {
+    margin-top: 10px;
+    padding: 12px 25px;
+    background-color: rgb(160,220,90);
+    color: rgb(59,59,59);
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-family: 'Bebas Neue', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-desc-container button:hover,
+.profile-pic-container button:hover {
+    background-color: rgb(126, 128, 123);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* === RESPONSIVENESS === */
+@media (max-width: 800px) {
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .profile-desc-container {
+        width: 100%;
+    }
+}
+.added-sports-section {
+    margin-top: 30px;
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.added-sport-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.added-sport-name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.remove-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background: #c0392b;
+}
+
+/* === 
+ADDED ACTIVITIES SECTION 
+=== */
+.added-sports-section {
+    margin-top: 30px;
+    background: rgba(40, 40, 40, 0.9);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+}
+
+.added-sports-section h2 {
+    color: rgb(181,247,81);
+    font-size: 22px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgb(28,27,27);
+}
+
+#added-sports {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.added-sport-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(60,60,60,0.85);
+    border: 1px solid rgb(181,247,81);
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: rgb(240,240,240);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.added-sport-item:hover {
+    background: rgba(70,70,70,0.95);
+}
+
+.added-sport-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: rgb(181,247,81);
+}
+
+.remove-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 800px) {
+    .added-sports-section {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .added-sport-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .remove-btn {
+        align-self: flex-end;
+    }
+}
+.invite-friend-select {
+    margin-left: 10px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgb(181,247,81);
+    background: rgba(70,70,70,0.8);
+    color: rgb(240,240,240);
+    font-size: 14px;
+}
+
+.invite-btn {
+    margin-left: 6px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: rgb(60,180,220);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.invite-btn:hover {
+    background: rgb(40,150,190);
+    transform: scale(1.05);
+}
+
+/* === PROFILE NAME & PRONOUNS === */
+.profile-name-pronouns {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: rgb(181,247,81);
+    letter-spacing: 1px;
+}
+
+.profile-pronouns {
+    font-size: 1.1em;
+    color: rgb(220,220,220);
+    margin-top: 4px;
+}
+
+/* Pronouns input field */
+.profile-pronouns-input {
+    margin-top: 8px;
+    padding: 10px;
+    width: 80%;
+    font-size: 1em;
+    border: 1px solid rgb(181,247,81);
+    border-radius: 8px;
+    background-color: rgba(70,70,70,0.6);
+    color: rgb(240,240,240);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.profile-pronouns-input:focus {
+    outline: none;
+    background-color: rgba(80,80,80,0.8);
+    box-shadow: 0 0 8px rgb(181,247,81);
+}
+
+/* === PROFILE SECTION GRID (LEFT-RIGHT LAYOUT) === */
+.profile-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.profile-pic-container {
+    flex: 1 1 250px;
+    text-align: center;
+}
+
+.profile-desc-container {
+    flex: 2 1 500px;
+}
+
+@media (max-width: 800px) {
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .profile-pronouns-input {
+        width: 100%;
+    }
+}

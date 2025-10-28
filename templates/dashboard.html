@@ -1,0 +1,102 @@
+ <!-- the main dashboard with all the activities-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<!-- navbar -->
+<header class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+        ActiveBond
+    </div>
+    <nav>
+        {% if 'username' in session %}
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('friends_bp.friends_index') }}">Friends</a>
+        <a href="{{ url_for('feed') }}">Feed</a>
+        <a href="{{ url_for('me') }}">Me</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+<main>
+    {% block content %}{% endblock %}
+ <!-- upcoming activities-->
+    <div class="header">Upcoming activities</div>
+    <div class="text_box">
+        <p>
+        Explore all the exciting sports activities happening soon! Browse upcoming events, check their details, and easily add your favorites to your reservations. You can even publish your own activity — include the time, date, and any additional info to invite others and make it part of the fun!
+        </p>
+    </div>
+    <!--  Upload activity-->
+    <div class="upload-section">
+        <h2>Upload a New Sport</h2>
+        <form method="POST" enctype="multipart/form-data" class="upload-form">
+            <label for="sport_name">Sport Name:</label>
+            <input type="text" name="sport_name" id="sport_name" required>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="3" required></textarea>
+            <label for="image">Upload Image:</label>
+            <input type="file" name="image" id="image" accept="image/*">
+            <button type="submit" class="upload-btn">
+                <i class="fa fa-upload"></i> Upload Sport
+            </button>
+        </form>
+    </div>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+<!-- Sport Cards+fliping description -->
+<div class="cards-container">
+    {% if sports %}
+    {% for sport in sports %}
+    <div class="card" onclick="toggleDescription(this)">
+        <img src="{% if sport.image %}{{ url_for('static', filename='uploads/' + sport.image) }}{% else %}{{ url_for('static', filename='images/default_sport.jpg') }}{% endif %}"
+             alt="{{ sport.sport_name }}">
+        <!-- Delete Button for the uploader -->
+        {% if sport.username == username %}
+        <form method="POST" action="{{ url_for('delete_sport', sport_id=sport.id) }}" class="delete-form" 
+              onsubmit="event.stopPropagation(); return confirm('Are you sure you want to delete this sport?');">
+            <button type="submit" class="delete-btn">
+                <i class="fa fa-trash"></i>
+            </button>
+        </form>
+        {% endif %}
+        <div class="card-name">{{ sport.sport_name }}</div>
+        <div class="card-description">{{ sport.description }}</div>
+        <div class="card-footer">
+            <small>
+                Uploaded by <strong>{{ sport.username }}</strong>
+                <span class="upload-time">• {{ sport.timestamp }}</span>
+            </small>
+        </div>            
+        <button class="add-btn" onclick="event.stopPropagation(); addSport('{{ sport.sport_name }}')">
+            <i class="fa fa-plus"></i> Add
+        </button>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No sports uploaded yet. Be the first to add one!</p>
+    {% endif %}
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

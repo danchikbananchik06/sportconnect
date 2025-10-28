@@ -1,0 +1,118 @@
+/* ==========================
+     Authorisation forms for log in and register
+========================== */
+.auth-container {
+    width: 400px;
+    margin: 80px auto; 
+    background-color: rgb(89, 88, 88);
+    padding: 25px; 
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(181, 247, 81, 0.2);
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    color: rgb(190, 244, 111);
+    border: 2px solid rgb(181, 247, 81);
+}
+
+.auth-container h2 {
+    font-size: 48px; 
+    margin-bottom: 20px; 
+    color: rgb(162, 249, 30);
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 12px rgba(39, 38, 38, 0.8);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px; 
+}
+
+.auth-form label {
+    color: rgb(190, 244, 111);
+    font-size: 34px;
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-bottom: 2px; 
+    text-shadow: 2px 2px 12px rgba(0,0,0,0.8);
+}
+
+.auth-form input {
+    width: 80%;
+    padding: 10px;
+    border: 2px solid rgb(132, 186, 51);
+    border-radius: 8px;
+    background-color: rgb(54, 52, 52);
+    color: white;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+}
+
+.auth-form button {
+    background-color: rgb(181, 247, 81);
+    color: rgb(59, 59, 59);
+    border: none;
+    padding: 10px 30px; 
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; 
+    border-radius: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+
+.auth-form button:hover {
+    background-color: rgb(160, 220, 90); 
+    transform: scale(1.05);             
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4); 
+    opacity: 0.9;                        
+}
+
+.auth-switch {
+    margin-top: 14px; 
+    font-size: 18px;
+    color: rgb(190, 244, 111);
+}
+
+.auth-switch a {
+    color: rgb(181, 247, 81);
+    text-decoration: underline;
+}
+
+.auth-switch a:hover {
+    color: #8cef3b;
+}
+
+.error {
+    color: #ff5c5c;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; 
+}
+
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.5; 
+}

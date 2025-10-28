@@ -1,0 +1,93 @@
+ <!-- feed page with all the posts -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Feed - ActiveBond</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style4.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style5.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+ <!-- navbar -->
+<header class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+        ActiveBond
+    </div>
+    <nav>
+        {% if 'user_id' in session %}
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('friends_bp.friends_index') }}">Friends</a>
+            <a href="{{ url_for('feed') }}">Feed</a>
+            <a href="{{ url_for('me') }}">Me</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+<main class="feed-container">
+    <h1>Community Feed</h1>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="messages">
+          {% for category, msg in messages %}
+            <li class="{{ category }}">{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <!-- Create a Post -->
+    <div class="create-post-card">
+        <form method="POST" enctype="multipart/form-data" class="post-form">
+            <textarea name="content" placeholder="What's on your mind, {{ session['username'] }}?"></textarea>
+            <input type="file" name="image" accept="image/*">
+            <button type="submit" class="post-btn">Post</button>
+        </form>
+    </div>
+    <!-- Posts -->
+    <div class="posts-list">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post-card">
+                    <div class="post-card-header">
+                        <div class="post-user">
+                            {% if post['profile_pic'] %}
+                                <img src="{{ url_for('static', filename='uploads/' + post['profile_pic']) }}" alt="Profile" class="post-avatar">
+                            {% else %}
+                                <div class="post-avatar placeholder"></div>
+                            {% endif %}
+                            <div class="post-user-meta">
+                                <span class="post-username">{{ post['username'] }}</span>
+                                <span class="post-time">{{ post['timestamp'] }}</span>
+                            </div>
+                        </div>
+                        {% if post['user_id'] == session['user_id'] %}
+                        <form method="POST" action="{{ url_for('delete_post', post_id=post['id']) }}" class="delete-post-form">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="post-body">
+                        {% if post['content'] %}
+                            <p>{{ post['content'] }}</p>
+                        {% endif %}
+                        {% if post['image'] %}
+                            <img src="{{ url_for('static', filename='uploads/' + post['image']) }}" alt="Post Image" class="post-image">
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-msg">No posts yet. Be the first to post something!</p>
+        {% endif %}
+    </div>
+</main>
+</body>
+</html>

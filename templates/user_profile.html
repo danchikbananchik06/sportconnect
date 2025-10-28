@@ -1,0 +1,73 @@
+ <!-- other user profiles-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.username }} - ActiveBond</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style4.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- navbar -->
+<header class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+        ActiveBond
+    </div>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('friends_bp.friends_index') }}">Friends</a>
+        <a href="{{ url_for('feed') }}">Feed</a>
+        <a href="{{ url_for('me') }}">Me</a>
+    </nav>
+</header>
+<main>
+    <div class="profile-section">
+        <!-- Profile Picture + Name -->
+        <div class="profile-pic-container">
+            {% if user.profile_pic %}
+                <img src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}" 
+                     alt="{{ user.username }}'s Profile Picture" 
+                     class="profile-pic">
+            {% else %}
+                <div class="profile-pic-placeholder">No Image</div>
+            {% endif %}
+            <div class="profile-name-pronouns">
+                <div class="profile-name">{{ user.username }}</div>
+                <div class="profile-pronouns">{{ user.pronouns or '' }}</div>
+            </div>
+        </div>
+        <!-- Description -->
+        <div class="profile-desc-container">
+            <p>{{ user.description or "No description yet." }}</p>
+        </div>
+        <!-- Sports -->
+        <h2>Sports</h2>
+        <ul>
+            {% for sport in sports %}
+                <li>{{ sport }}</li>
+            {% else %}
+                <li>No sports added.</li>
+            {% endfor %}
+        </ul>
+        <!-- Friends -->
+        <h2>Friends</h2>
+        <ul class="friends-ul">
+            {% for friend in friends %}
+                <li>
+                    <img src="{{ url_for('static', filename='uploads/' + (friend['profile_pic'] or 'default.png')) }}" 
+                         alt="{{ friend['username'] }}'s profile picture" class="friend-pic">
+                    <a href="{{ url_for('user_profile', username=friend['username']) }}">{{ friend['username'] }}</a>
+                </li>
+            {% else %}
+                <li>No friends yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
+</body>
+</html>

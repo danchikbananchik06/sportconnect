@@ -1,0 +1,96 @@
+ <!-- page with a friend list -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends - ActiveBond</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+     <!-- navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+            ActiveBond
+        </div>
+        <nav>
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('friends_bp.friends_index') }}">Friends</a>
+                <a href="{{ url_for('feed') }}">Feed</a>
+                <a href="{{ url_for('me') }}">Me</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <div class="friends-container">
+            <h1>Friends</h1>
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="messages">
+                        {% for category, msg in messages %}
+                            <li class="{{ category }}">{{ msg }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <!-- Add friend form -->
+            <form action="{{ url_for('friends_bp.friends_index') }}" method="POST" class="add-friend-form">
+                <input type="text" name="nickname" placeholder="Enter username..." required>
+                <button type="submit">Add Friend</button>
+            </form>
+            <!-- Pending friend requests -->
+            {% if requests %}
+                <h2>Pending Requests</h2>
+                <ul class="requests-list">
+                    {% for r in requests %}
+                        <li>
+                            <strong>{{ r[1] }}</strong> sent you a friend request.
+                            <div class="friend-actions">
+                                <a href="{{ url_for('friends_bp.accept', friendship_id=r[0]) }}">Accept</a>
+                                <a href="{{ url_for('friends_bp.reject', friendship_id=r[0]) }}">Reject</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <!-- Friends list -->
+            <h2>Your Friends</h2>
+            <ul class="friends-list">
+                {% if friends %}
+                    {% for f in friends %}
+                        <li class="friend-item">
+                            <!-- Profile pic -->
+                            {% if f[1] == session['username'] %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ (f[4] if f[4] else 'default.png')) }}" 
+                                     alt="{{ f[3] }}'s profile picture" class="friend-pic">
+                                <!-- Username link -->
+                                <a href="{{ url_for('user_profile', username=f[3]) }}">{{ f[3] }}</a>
+                            {% else %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ (f[2] if f[2] else 'default.png')) }}" 
+                                     alt="{{ f[1] }}'s profile picture" class="friend-pic">
+                                <!-- Username link -->
+                                <a href="{{ url_for('user_profile', username=f[1]) }}">{{ f[1] }}</a>
+                            {% endif %}
+                            <div class="friend-actions">
+                                <a href="{{ url_for('friends_bp.block', friendship_id=f[0]) }}">Block</a>
+                                <a href="{{ url_for('friends_bp.delete', friendship_id=f[0]) }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>No friends yet.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </main>
+</body>
+</html>
